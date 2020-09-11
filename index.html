@@ -12,31 +12,9 @@
   <div class="nav-bar"></div>
 
   <div id="app">
-    <div class="product">
-      <div class="product-image">
-        <img v-bind:src="image" alt="Socks">
-      </div>
-
-      <div class="product-info">
-        <h1>{{ title }}</h1>
-        <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
-
-        <ul>
-          <li v-for="detail in details">{{ detail }}</li>
-        </ul>
-
-        <div class="color-box" :style="{ backgroundColor: variant.color}" v-for="(variant, index) in variants"
-          :key="variant.id" @mouseover=updateProduct(index)>
-        </div>
-
-        <button v-on:click="addToCart" :class="{disabledButton: !inStock}" :disabled="!inStock">Add to Cart</button>
-
-        <div class="cart">
-          <p>Cart({{ cart }})</p>
-        </div>
-      </div>
-    </div>
+    <product></product>
+    <product></product>
+    <product></product>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
