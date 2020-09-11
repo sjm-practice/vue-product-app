@@ -1,6 +1,7 @@
 var app = new Vue({
   el: "#app",
   data: {
+    brand: "Vue Mastery",
     product: "Socks",
     inStock: false,
     image: "./assets/vmSocks-green-onWhite.jpg",
@@ -24,11 +25,18 @@ var app = new Vue({
     cart: 0,
   },
   methods: {
-    addToCart: function () {
+    addToCart() {
       this.cart += 1;
     },
-    updateProduct: function(image) {
+    updateProduct(image) {
       this.image = image;
     },
   },
+  // computed properties are special methods, which cache results and won't
+  // rerun unless one of the dependent data has changed
+  computed: {
+    title() {
+      return this.brand + " " + this.product;
+    }
+  }
 });
