@@ -19,7 +19,18 @@
 
       <div class="product-info">
         <h1>{{ product  }}</h1>
-        <a :href="prodWebsite">Product Website</a>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of Stock</p>
+
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+
+        <div v-for="variant in variants" :key="variant.id">
+          <p>
+            {{ variant.color }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
