@@ -28,11 +28,9 @@ Vue.component("product", {
         </div>
 
         <button v-on:click="addToCart" :class="{disabledButton: !inStock}" :disabled="!inStock">Add to Cart</button>
-
-        <div class="cart">
-          <p>Cart({{ cart }})</p>
-        </div>
       </div>
+
+      <product-review></product-review>
     </div>
   `,
   
@@ -60,14 +58,14 @@ Vue.component("product", {
           quantity: 0,
         },
       ],
-      cart: 0,
     };
   },
 
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id);
     },
+
     updateProduct(index) {
       this.selectedVariant = index;
     },
@@ -94,9 +92,27 @@ Vue.component("product", {
   }
 });
 
+Vue.component("product-review", {
+  template: `
+    <input type="text" v-model="name"/>
+  `,
+
+  data: {
+    name: null,
+  },
+});
+
 var app = new Vue({
   el: "#app",
+
   data: {
     premium: true,
-  }
+    cart: [],
+  },
+
+  methods: {
+    updateCart(id) {
+      this.cart.push(id);
+    },
+  },
 });
