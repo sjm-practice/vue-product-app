@@ -94,12 +94,57 @@ Vue.component("product", {
 
 Vue.component("product-review", {
   template: `
-    <input type="text" v-model="name"/>
+    <form className="review-form" @submit.prevent="onSubmit">
+      <p>
+        <label for="name">Name:</label>
+        <input id="name" type="text" v-model="name"/>
+      </p>
+
+      <p>
+        <label for="review">Review:</label>
+        <textarea name="review" id="review" cols="30" rows="5" v-model="review"></textarea>
+      </p>
+
+      <p>
+        <label for="rating">Rating:</label>
+        <select name="rating" id="rating" v-model.number="rating">
+          <option>5</option>
+          <option>4</option>
+          <option>3</option>
+          <option>2</option>
+          <option>1</option>
+        </select>
+      </p>
+
+      <p>
+        <input type="submit" value="Submit"/>
+      </p>
+    </form>
   `,
 
-  data: {
-    name: null,
+  data() {
+    return {
+      name: null,
+      review: null,
+      rating: null,
+    };
   },
+
+  methods: {
+    onSubmit() {
+      let productReview = {
+        name: this.name,
+        review: this.review,
+        rating: this.rating,
+      };
+
+      console.log('productReview:', productReview);
+
+      this.name = null;
+      this.review = null;
+      this.rating = null;
+    }
+  }
 });
 
 var app = new Vue({
