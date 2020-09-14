@@ -30,7 +30,20 @@ Vue.component("product", {
         <button v-on:click="addToCart" :class="{disabledButton: !inStock}" :disabled="!inStock">Add to Cart</button>
       </div>
 
-      <product-review></product-review>
+      <div>
+        <h2>Reviews</h2>
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul>
+          <li v-for="review in reviews">
+            <p>{{ review.name }}</p>
+            <p>Rating: {{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <product-review @review-submitted="addReview"></product-review>
+
     </div>
   `,
   
@@ -58,6 +71,7 @@ Vue.component("product", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
 
@@ -68,6 +82,12 @@ Vue.component("product", {
 
     updateProduct(index) {
       this.selectedVariant = index;
+    },
+
+    addReview(productReview) {
+      console.log('productReview:', productReview);
+      this.reviews.push(productReview);
+      console.log('this.reviews:', this.reviews);
     },
   },
 
@@ -94,7 +114,7 @@ Vue.component("product", {
 
 Vue.component("product-review", {
   template: `
-    <form className="review-form" @submit.prevent="onSubmit">
+    <form class="review-form" @submit.prevent="onSubmit">
       <p>
         <label for="name">Name:</label>
         <input id="name" type="text" v-model="name"/>
@@ -138,7 +158,7 @@ Vue.component("product-review", {
         rating: this.rating,
       };
 
-      console.log('productReview:', productReview);
+      this.$emit("review-submitted", productReview);
 
       this.name = null;
       this.review = null;
